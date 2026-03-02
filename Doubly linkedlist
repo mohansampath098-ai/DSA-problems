@@ -1,1 +1,135 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct lnode{
+    int data;
+    struct lnode*next;
+};
+typedef struct lnode node;
+node*head=NULL;
+void insertatbegin(int val){
+    node*newnode=(node*)malloc(sizeof(node));
+    if(newnode==NULL){
+        printf("empty");
+        return;
+    }
+    newnode->data=val;
+    if(head==NULL){
+        newnode->next=head;
+        head=newnode;
+    }
+    else{
+        newnode->next=head;
+        head=newnode;
+    }
+    printf("insert at %d begin\n",val);
+}
 
+void Display(){
+     if(head==NULL){
+        printf("empty");
+        return;
+     }
+      node*temp=head;
+     while(temp!=NULL){
+         printf(" %d",temp->data);
+         temp=temp->next;
+     }
+}
+void Insertatpos(int pos,int val){
+    int i;
+    node*newnode=(node*)malloc(sizeof(node));
+     if(newnode==NULL){
+        printf("empty");
+        return;
+    }
+   node*temp=head;
+   newnode->data=val;
+   for(int i=1;i<=pos-1;i++){
+       if(temp==NULL){
+           printf("Ivalid number");
+           return;
+       }
+       temp=temp->next;
+   }
+       newnode->next=temp->next;
+       temp->next=newnode;
+ 
+   printf("intsert at %d at %d",val,pos);
+    
+}
+void deleteatpos(int pos){
+    int i;
+    node*temp=head;
+    node*pre;
+    if(head==NULL){
+        printf("empty");
+        return;
+     }
+     if(pos==0){
+         head=head->next;
+         printf("deleted %d ",temp->data);
+         free(temp);
+         return;
+     }
+       for(int i=1;i<=pos;i++){
+     pre=temp;
+     temp=temp->next;
+     if(temp==NULL){
+         printf("empty");
+     }
+       }
+   
+         pre->next=temp->next;
+         printf("delete %d this",temp->data);
+         free(temp);
+}
+int main(){
+    int val;
+    int choice;
+    int pos;
+    while(1){
+        printf("1.insertatbegin: \n");
+        printf("2.Display: \n");
+        printf("3.Exit: \n");
+        printf("4.Insertatpos: \n ");
+        printf("5.deleteatpos: \n");
+        scanf("%d",&choice);
+    
+    switch(choice){
+        case 1:
+        printf("insertatbegin\n");
+        scanf("%d",&val);
+        insertatbegin(val);
+        break;
+        case 2:
+        printf("Display\n");
+        Display();
+        break;
+        case 3:
+        exit(0);
+         case 4:
+         printf("enter a pos: ");
+        scanf("%d",&pos);
+        printf("enter a val: ");
+        scanf("%d",&val);
+        if(pos<0){
+            printf("invalid number");
+        }
+        if(pos==0){
+            insertatbegin(val);
+        }
+        else{
+        Insertatpos(pos,val);
+        }
+        break;
+        case 5:
+        printf("enter a pos: ");
+        scanf("%d",&pos);
+        deleteatpos(pos);
+        break;
+        default:printf("Invalid number:");
+        break;
+    }
+    }
+    return 0;
+}
